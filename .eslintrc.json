@@ -1,0 +1,71 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true
+  },
+  "extends": [
+    "airbnb",
+    "plugin:storybook/recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    /* 
+      This is what plugin:prettier/recommended expands to:
+      {
+        "extends": [
+          "prettier"
+        ],
+        "plugins": [
+          "prettier"
+        ],
+        "rules": {
+          "prettier/prettier": "error",
+          "arrow-body-style": "off",
+          "prefer-arrow-callback": "off"
+        }
+      }
+    */
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-props-no-spreading": [
+      1,
+      {
+        "html": "ignore",
+        "custom": "enforce",
+        "explicitSpread": "ignore",
+        "exceptions": []
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["**/*.test.js", "**/*.spec.js", "**/*.stories.jsx"]
+      }
+    ],
+    "no-use-before-define": [
+      "error",
+      {
+        "functions": false
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["*.stories.@(ts|tsx|js|jsx|mjs|cjs)"],
+      "rules": {
+        "react/function-component-definition": "off",
+        "react/jsx-props-no-spreading": "off"
+      }
+    }
+  ]
+}

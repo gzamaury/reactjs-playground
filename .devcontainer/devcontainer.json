@@ -1,0 +1,106 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.241.1/containers/javascript-node
+{
+  "name": "rjs-p",
+  // Build from an image, Dockerfile or docker-compose.yml
+  // https://code.visualstudio.com/docs/remote/create-dev-container#_create-a-devcontainerjson-file
+  // from image:
+  // "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:0-16-bullseye"
+  // from Dockerfile:
+  "build": {
+    "dockerfile": "Dockerfile",
+    // https://github.com/microsoft/vscode-dev-containers/tree/v0.241.1/containers/javascript-node
+    // https://github.com/nodejs/docker-node/blob/c87ff785fe4be8271b95d03e6c226d07d79df003/18/bullseye/Dockerfile
+    // Update 'VARIANT' to pick a Node version: 18, 16, 14.
+    // Append -bullseye or -buster to pin to an OS version.
+    // Use -bullseye variants on local arm64/Apple Silicon.
+    "args": { "VARIANT": "18" }
+  },
+  // from docker-compose.yml
+  // "name": "[Optional] Your project name here",
+  // "dockerComposeFile": "../docker-compose.yml",
+  // "service": "the-name-of-the-service-you-want-to-work-with-in-vscode",
+  // "workspaceFolder": "/default/workspace/path/in/container/to/open",
+  // "shutdownAction": "stopCompose",
+
+  // Configure tool-specific properties.
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "formulahendry.auto-complete-tag",
+        "mgmcdermott.vscode-language-babel",
+        "streetsidesoftware.code-spell-checker",
+        "ritwickdey.create-file-folder",
+        "pranaygp.vscode-css-peek",
+        "rohit-gohri.format-code-action",
+        "wix.glean",
+        "riazxrazor.html-to-jsx",
+        "Zignd.html-css-class-completion",
+        "esbenp.prettier-vscode",
+        "planbcoding.vscode-react-refactor",
+        "formulahendry.auto-close-tag",
+        "formulahendry.auto-rename-tag",
+        "dsznajder.es7-react-js-snippets",
+        "achil.vscode-javascript-repl",
+        "WallabyJs.quokka-vscode",
+        "zaaack.markdown-editor"
+      ]
+    }
+  },
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [3000, 6006],
+
+  // Publishing a port
+  // https://code.visualstudio.com/docs/remote/containers#_publishing-a-port
+  // Unlike forwardPorts, these listen on all interfaces (0.0.0.0) not just localhost for it to be available externally
+  // "appPort": ["3000:3000"],
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "npm i",
+
+  // Environment variables
+  // https://code.visualstudio.com/remote/advancedcontainers/environment-variables
+  // Use containerEnv to set variables that should apply to the entire container
+  // "containerEnv": {
+  //   "MY_CONTAINER_VAR": "some-value-here",
+  //   "MY_CONTAINER_VAR2": "${localEnv:SOME_LOCAL_VAR}"
+  // },
+  // or remoteEnv to set variables for VS Code and related sub-processes (terminals, tasks, debugging, etc.)
+  // "remoteEnv": {
+  //   "PATH": "${containerEnv:PATH}:/some/other/path",
+  //   "MY_REMOTE_VARIABLE": "some-other-value-here",
+  //   "MY_REMOTE_VARIABLE2": "${localEnv:SOME_LOCAL_VAR}"
+  // }
+  // containerEnv can reference local variables and remoteEnv can reference both local and existing container variables
+
+  // Start a process when the container starts
+  // https://code.visualstudio.com/remote/advancedcontainers/start-processes
+  // "postStartCommand": "/etc/init.d/ssh start",
+  // "postStartCommand": "service ssh start",
+
+  // Add another local file mount
+  // https://code.visualstudio.com/remote/advancedcontainers/add-local-file-mount
+  "mounts": [
+    //   "source=/local/source/path/goes/here,target=/target/path/in/container/goes/here,type=bind,consistency=cached",
+    //   this will bind mount ~ ($HOME) on macOS/Linux and the user's folder (%USERPROFILE%) on Windows
+    //   "source=${localEnv:HOME}${localEnv:USERPROFILE},target=/host-home-folder,type=bind,consistency=cached",
+    //   and a sub-folder in the workspace to a different location
+    //   "source=${localWorkspaceFolder}/app-data,target=/data,type=bind,consistency=cached",
+
+    // Avoiding VS Code extension reinstalls for a non-root user
+    // https://code.visualstudio.com/remote/advancedcontainers/avoid-extension-reinstalls
+    "source=rjs-p_exts,target=/node/.vscode-server/extensions,type=volume",
+    "source=rjs-p_exts-insiders,target=/node/.vscode-server-insiders/extensions,type=volume",
+
+    // Persist bash history for a non-root user
+    // https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
+    "source=rjs-p_bashhistory,target=/commandhistory,type=volume"
+  ],
+
+  // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "node"
+}

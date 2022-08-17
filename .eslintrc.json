@@ -66,6 +66,13 @@
         "react/function-component-definition": "off",
         "react/jsx-props-no-spreading": "off"
       }
+    },
+    {
+      "files": ["src/examples/**/*.js"],
+      "rules": {
+        "no-unused-vars": "off",
+        "no-console": "off"
+      }
     }
   ]
 }
